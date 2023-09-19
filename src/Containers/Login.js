@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const navigate =useNavigate()
@@ -16,25 +17,21 @@ const Login = () => {
           .min(8, "Password must be at least 8 characters"),
       });
       const handleSubmit = async(value)=>{
-        const headers = {
-          'Content-Type': 'application/json',
-          'Authorization': 'JWT fefege...'
+        try {
+          const response = await axios.post('http://localhost:4000/api/login',value);
+          const data = response.data;
+          if(data.status){
+            navigate('/')
+
+          }else{
+            toast.error(data.message)
           }
+          console.log(data)
           
-          axios.post('http://localhost:6000/api/login', value, {
-            headers: headers
-          })
-          .then((response) => {
-            console.log(response)
-          //   if(response.data.status){
-          //   console.log({response});
-          //   localStorage.setItem('user', JSON.stringify(response.data))
-          //   navigate('/')
-          // }
-          })
-          .catch((error) => {
-            console.log({error});
-          })
+          // Process the data here
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
           }
   return (
     <>
