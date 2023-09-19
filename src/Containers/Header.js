@@ -15,12 +15,15 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
+import { useSelector } from "react-redux";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const userData =useSelector((state) => state.user)
+  console.log(userData)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [value, setValue] = React.useState(null);
@@ -147,14 +150,23 @@ function ResponsiveAppBar() {
                 <Tab label={page} {...a11yProps(i)} />
               ))}
             </Tabs>
-          </Box>
-          {pathname !== "/login" && (
+          </Box>{console.log( !userData.status)}
+          {pathname !== "/login" && !userData.status && (
             <button
               onClick={() => navigate("/login")}
               type="button"
               className="btn btn-warning"
             >
               Login
+            </button>
+          )}
+          {pathname !== "/login" && userData.status && (
+            <button
+              onClick={() => navigate("/login")}
+              type="button"
+              className="btn btn-warning"
+            >
+              Logout
             </button>
           )}
           <Box sx={{ flexGrow: 0 }}>

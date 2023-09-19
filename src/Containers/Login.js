@@ -5,9 +5,12 @@ import * as Yup from "yup";
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { LoginUserData } from '../redux/action/productAction';
 
 const Login = () => {
     const navigate =useNavigate()
+    const dispatch=useDispatch()
     const schema = Yup.object().shape({
       userName: Yup.string()
           .required("User Name is a required field")
@@ -20,13 +23,14 @@ const Login = () => {
         try {
           const response = await axios.post('http://localhost:4000/api/login',value);
           const data = response.data;
+          console.log(data)
           if(data.status){
             navigate('/')
-
+dispatch(LoginUserData(data))
           }else{
             toast.error(data.message)
           }
-          console.log(data)
+        
           
           // Process the data here
         } catch (error) {

@@ -11,3 +11,9 @@ type:ActionTypes.SELECTED_PRODUCT,
 payload:products
     }
 }
+export const LoginUserData =(data)=>{
+    return {
+type:ActionTypes.USER,
+payload:data
+    }
+}
