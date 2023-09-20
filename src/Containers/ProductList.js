@@ -9,11 +9,11 @@ import { setProducts } from '../redux/action/productAction'
 const ProductList = () => {
     const dispatch =useDispatch()
     const featchProdeuct =async() => {
-const res = await axios.get('https://fakestoreapi.com/products').catch((error)=>{
-console.log("Error",error
+const res = await axios.get('http://localhost:4000/api/postlist').catch((error)=>{
+console.log("Error",res
 )
 })
-dispatch(setProducts(res.data))
+dispatch(setProducts(res.data.data))
     }
     useEffect(()=>{
         featchProdeuct()

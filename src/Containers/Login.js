@@ -27,6 +27,7 @@ const Login = () => {
           if(data.status){
             navigate('/')
 dispatch(LoginUserData(data))
+localStorage.setItem('userData', data.token);
           }else{
             toast.error(data.message)
           }

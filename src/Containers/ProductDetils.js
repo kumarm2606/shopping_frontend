@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { selectedProducts } from "../redux/action/productAction";
 import { useDispatch, useSelector } from "react-redux";
-import { ButtonBase, Grid, Paper, Typography } from "@mui/material";
+import {  Grid, Paper, Typography } from "@mui/material";
 
 const ProductDetils = () => {
   const { productId } = useParams();
@@ -12,11 +12,12 @@ const ProductDetils = () => {
   const { image, title, price, category, description } = product;
   const fetchProductDetail = async (id) => {
     const res = await axios
-      .get(`https://fakestoreapi.com/products/${id}`)
+      .get(`http://localhost:4000/api/postlist?id=${id}`)
       .catch((error) => {
         console.log("Error", error);
       });
-    dispatch(selectedProducts(res.data));
+      console.log(res,"---------------------->")
+    dispatch(selectedProducts(res.data.data[0]));
   };
   useEffect(() => {
     if (productId && productId !== "") fetchProductDetail(productId);
@@ -27,7 +28,7 @@ const ProductDetils = () => {
         p: 2,
         margin: "auto",
         maxWidth: "100%",
-        height: "350px",
+        height: "544px",
         flexGrow: 1,
         backgroundColor: (theme) =>
           theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -38,9 +39,8 @@ const ProductDetils = () => {
       ) : (
         <Grid container xs={12} spacing={2}>
           <Grid item xs={6}>
-            <ButtonBase sx={{ width: 128, height: 128 }}>
-              <img className="singalImage" alt="complex" src={image} />
-            </ButtonBase>
+              <img className="singalImage" alt="complex" src="https://cdn.pixabay.com/photo/2013/03/01/18/40/crispus-87928_1280.jpg" />
+           
           </Grid>
           <Grid item xs={6} sm container>
             <Grid item xs container direction="column" spacing={2}>

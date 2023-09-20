@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
 import { useSelector } from "react-redux";
+import CreateProduct from "./CreateProduct";
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -26,7 +27,8 @@ function ResponsiveAppBar() {
   console.log(userData)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [value, setValue] = React.useState(null);
+  const [modal,setModal] =React.useState(false);
+  const [value, setValue] = React.useState(0);
   console.log(pathname);
   const a11yProps = (index) => {
     return {
@@ -58,6 +60,7 @@ function ResponsiveAppBar() {
   };
 
   return (
+    <>
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -150,7 +153,8 @@ function ResponsiveAppBar() {
                 <Tab label={page} {...a11yProps(i)} />
               ))}
             </Tabs>
-          </Box>{console.log( !userData.status)}
+          </Box>
+          
           {pathname !== "/login" && !userData.status && (
             <button
               onClick={() => navigate("/login")}
@@ -159,7 +163,9 @@ function ResponsiveAppBar() {
             >
               Login
             </button>
+           
           )}
+           {userData.id =="1" &&<Button color="secondary" onClick={()=>setModal(true)}>Create</Button>}
           {pathname !== "/login" && userData.status && (
             <button
               onClick={() => navigate("/login")}
@@ -201,6 +207,9 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
+ 
+    <CreateProduct modal={modal} setModal={setModal}/>
+    </>
   );
 }
 export default ResponsiveAppBar;
